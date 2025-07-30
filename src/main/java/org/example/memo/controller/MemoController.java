@@ -30,15 +30,16 @@ public class MemoController {
             MemoResponseDto memoResponseDto = new MemoResponseDto(memo);
             responseList.add(memoResponseDto);
         }
-
-//        responseList = memoList.values().stream().map(MemoResponseDto::new).toList();
         return responseList;
     }
 
     @GetMapping("/{id}")
-    public MemoResponseDto findMemoById(@PathVariable Long id) {
+    public ResponseEntity<MemoResponseDto> findMemoById(@PathVariable Long id) {
         Memo memo = memoList.get(id);
-        return new MemoResponseDto(memo);
+        if (null == memo) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(new MemoResponseDto(memo),  HttpStatus.OK);
     }
     @PutMapping("/{id}")
     public MemoResponseDto updateMemoById(
