@@ -36,4 +36,8 @@ public class MemoController {
         memo.update(dto);
         return new MemoResponseDto(memo);
     }
+    @DeleteMapping("/{id}")
+    public void deleteMemoById(@PathVariable Long id) {
+        memoList.remove(id);
+    }
 }
